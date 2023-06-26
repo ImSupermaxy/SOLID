@@ -1,23 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Alura.LeilaoOnline.WebApp.Models;
 using Alura.LeilaoOnline.WebApp.Dados;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Alura.LeilaoOnline.WebApp.Controllers
 {
     [ApiController]
     [Route("/api/leiloes")]
     public class LeilaoApiController : ControllerBase
-    {
-        private AppDbContext _context;
-        private LeilaoDao _leilaoDao;
+    {        
+        private ILeilaoDao _leilaoDao;
 
-        public LeilaoApiController()
-        {
-            _context = new AppDbContext();
-            _leilaoDao = new LeilaoDao();
+        public LeilaoApiController(ILeilaoDao leilaoDao)
+        {            
+            _leilaoDao = leilaoDao;
         }     
 
         [HttpGet]
@@ -45,6 +40,7 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
             return Ok(leilao);
         }
 
+
         [HttpPut]
         public IActionResult EndpointPutLeilao(Leilao leilao)
         {
@@ -63,7 +59,6 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
             _leilaoDao.Excluir(leilao);
             return NoContent();
         }
-
 
     }
 }
