@@ -8,10 +8,12 @@ namespace Alura.LeilaoOnline.WebApp.Services.Handlers
     public class DefaultAdminService : IAdminService
     {
         ILeilaoDao _leilaoDao;
+        ICategoriaDao _categoriaDao;
 
-        public DefaultAdminService(ILeilaoDao leilaoDao)
+        public DefaultAdminService(ILeilaoDao leilaoDao, ICategoriaDao categoriaDao)
         {
             _leilaoDao = leilaoDao;
+            _categoriaDao = categoriaDao;
         }
 
         public void CadastraLeilao(Leilao leilao)
@@ -21,12 +23,12 @@ namespace Alura.LeilaoOnline.WebApp.Services.Handlers
 
         public IEnumerable<Categoria> ConsultaCategorias()
         {
-            return _leilaoDao.BuscarCategorias();            
+            return _categoriaDao.BuscarTodos();            
         }
 
         public IEnumerable<Leilao> ConsultaLeilao()
         {
-            return _leilaoDao.BuscarLeiloes();
+            return _leilaoDao.BuscarTodos();
         }
 
         public Leilao ConsultaLeilaoPorId(int id)
